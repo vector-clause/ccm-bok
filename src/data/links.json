@@ -1,0 +1,15 @@
+[
+  { "id": "ccm-3-1-2", "match": ["Sub-Clause 3.7"], "note": "FIDIC Engineer determinations" },
+  { "id": "ccm-9-2-1", "match": ["Sub-Clause 20.2", "Clause 61.3"], "note": "Time bars / conditions precedent (FIDIC 20.2, NEC4 61.3)" },
+  { "id": "ccm-3-2-3", "match": ["Early Warning Register", "Early Warning Notices", "Early Warning Notice"], "note": "NEC4 Clause 15" },
+  { "id": "ccm-3-2-4", "match": ["Accepted Programme"] },
+  { "id": "ccm-8-1-2", "match": ["Compensation Events", "Compensation Event"] },
+  { "id": "ccm-2-2-2", "match": ["Prevention Principle", "time at large", "Time at Large"] },
+  { "id": "ccm-2-2-3", "match": ["Liquidated Damages", "liquidated damages"] },
+  { "id": "ccm-3-3-4", "match": ["Triple Point"] },
+  { "id": "ccm-14-2-1", "match": ["Measured Mile"] },
+  { "id": "ccm-10-1", "match": ["Cost Value Reconciliation"] },
+  { "id": "ccm-13-2", "match": ["Time Impact Analysis", "Windows Analysis"] },
+  { "id": "ccm-18-2", "match": ["Golden Thread"] },
+  { "id": "ccm-15-3", "match": ["statutory adjudication", "Statutory Adjudication"] }
+]

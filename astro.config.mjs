@@ -4,12 +4,13 @@ import starlightLlmsTxt from 'starlight-llms-txt';
 import starlightLinksValidator from 'starlight-links-validator';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import remarkCcmLinks from './plugins/remark-ccm-links.mjs';
 import { unified } from '@astrojs/markdown-remark';
 
 export default defineConfig({
   site: process.env.SITE_URL ?? 'https://ccm-bok.org',
   markdown: {
-    processor: unified({ remarkPlugins: [remarkMath], rehypePlugins: [rehypeKatex] }),
+    processor: unified({ remarkPlugins: [remarkMath, remarkCcmLinks], rehypePlugins: [rehypeKatex] }),
   },
   integrations: [
     starlight({

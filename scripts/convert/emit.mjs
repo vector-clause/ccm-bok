@@ -32,13 +32,16 @@ const refLink = (n) => `[${n}](/references/#ref-${n})`;
 
 /** Turn glued citation digits in prose/table text into superscript reference links. */
 export function linkCitations(text, acc) {
+  // Glued digits that the generic pattern below cannot see (digits follow a clause number).
+  text = text.replace(/(Sub-Clause 3\.7|Clause 20)38(?=\.)/g, (_, c) => { acc.unverified.add(38); return `${c}<sup>${refLink(38)}</sup>`; });
   const re = /(?<=[a-z)\]%])(\d{1,3})(?=[\s.,;:)|]|$)/g;
-  return text.replace(re, (run) => {
+  text = text.replace(re, (run) => {
     const r = splitCitations('x' + run);
     if (!r.sources.length) return run;
     for (const n of r.sources) (r.ambiguous ? acc.unverified : acc.verified).add(n);
     return `<sup>${r.sources.map(refLink).join(', ')}</sup>`;
   });
+  return text;
 }
 
 function write(root, rel, fm, body, opts, stats) {

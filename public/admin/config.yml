@@ -1,0 +1,47 @@
+# Decap CMS: edit pages in the browser; saves become Git commits / pull requests.
+# Local use: `npm run cms` (decap-server) then open http://localhost:4321/admin/
+# Production login needs a GitHub OAuth proxy; set base_url below once deployed.
+backend:
+  name: github
+  repo: vector-clause/ccm-bok
+  branch: main
+  open_authoring: false
+  # base_url: https://YOUR-OAUTH-PROXY
+publish_mode: editorial_workflow   # contributions land as PRs for review
+local_backend: true
+media_folder: public/uploads
+public_folder: /uploads
+collections:
+  - name: docs
+    label: Pages
+    folder: src/content/docs
+    extension: md
+    format: frontmatter
+    create: false
+    nested: { depth: 6, summary: '{{title}}' }
+    meta: { path: { widget: string, label: Path, index_file: index } }
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: description, label: Description, widget: text }
+      - { name: id, label: ID, widget: string, required: false }
+      - { name: volume, label: Volume, widget: select, options: [I, II, III, IV, V, VI, VII], required: false }
+      - { name: domain, label: Domain, widget: string, required: false }
+      - { name: section, label: Section, widget: string, required: false }
+      - { name: type, label: Type, widget: select, options: [concept, comparison, workflow, lexicon, register, overview], default: concept }
+      - { name: status, label: Status, widget: select, options: [stub, draft, reviewed], default: stub }
+      - { name: summary, label: Summary, widget: text, required: false }
+      - name: standards_referenced
+        label: Standards referenced
+        widget: list
+        required: false
+        fields:
+          - { name: standard, label: Standard, widget: string }
+          - { name: clause, label: Clause, widget: string, required: false }
+      - { name: key_formula, label: Key formula (LaTeX), widget: string, required: false }
+      - { name: related_concepts, label: Related concept IDs, widget: list, required: false }
+      - { name: sources, label: Verified source numbers, widget: list, required: false, field: { name: n, widget: number, value_type: int, min: 1 } }
+      - { name: sources_unverified, label: Unverified source numbers, widget: list, required: false, field: { name: n, widget: number, value_type: int, min: 1 } }
+      - { name: license, label: Licence, widget: string, default: CC-BY-NC-SA-4.0 }
+      - { name: last_audited, label: Last audited, widget: string, required: false }
+      - { name: contributors, label: Contributors, widget: list, required: false }
+      - { name: body, label: Body (Markdown), widget: markdown }
