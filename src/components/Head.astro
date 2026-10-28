@@ -1,0 +1,30 @@
+---
+import Default from '@astrojs/starlight/components/Head.astro';
+
+const { entry } = Astro.locals.starlightRoute;
+const d = entry.data as Record<string, any>;
+const site = Astro.site ?? new URL('https://ccm-bok.org');
+const url = new URL(Astro.url.pathname, site).href;
+const technical = d.type === 'workflow' || d.type === 'comparison' || !!d.key_formula;
+const schemaType = d.type === 'lexicon' ? 'DefinedTerm' : technical ? 'TechArticle' : 'Article';
+const refs = [...(d.sources ?? [])].map((n: number) => new URL('/references/', site).href + `#ref-${n}`);
+
+const ld: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': schemaType,
+  ...(schemaType === 'DefinedTerm'
+    ? { name: d.title, description: d.summary ?? d.description, inDefinedTermSet: new URL('/volume-7/appendix-d/', site).href }
+    : { headline: d.title, description: d.description }),
+  url,
+  inLanguage: 'en',
+  license: 'https://creativecommons.org/licenses/by-nc-sa/4.0/',
+  isAccessibleForFree: true,
+  isPartOf: { '@type': 'WebSite', name: 'CCM-BOK', url: site.href },
+  ...(d.last_audited ? { dateModified: d.last_audited } : {}),
+  ...(d.contributors?.length ? { contributor: d.contributors.map((c: string) => ({ '@type': 'Person', name: c })) } : {}),
+  ...(refs.length ? { citation: refs } : {}),
+};
+---
+<Default {...Astro.props}><slot /></Default>
+<script type="application/ld+json" set:html={JSON.stringify(ld).replace(/</g, '\\u003c')} />
+<link rel="alternate" type="text/markdown" href={`${Astro.url.pathname.replace(/\/$/, '') || '/index'}.md`} />

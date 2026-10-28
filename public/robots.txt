@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ccm-bok.org/sitemap-index.xml
+# LLM-friendly index: /llms.txt, full text: /llms-full.txt, any page as Markdown: append .md
